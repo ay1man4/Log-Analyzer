@@ -1,4 +1,4 @@
-# Log Analysis Project
+#!/usr/bin/python3
 
 import datetime
 import psycopg2
