@@ -1,6 +1,6 @@
 # Log Analyzer
 
-Log Analyzer is a python script to analyze logs of a news blog. It give answers of three questions:
+Log Analyzer is a python script to analyze logs of a news blog. It give answers of three questions using three methods:
 
 1. What are the most popular three articles of all time?
 1. Who are the most popular article authors of all time?
