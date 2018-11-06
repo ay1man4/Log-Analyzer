@@ -80,6 +80,7 @@ def print_days_of_most_errors():
         print('{} — {}% errors'.format(d, r[1]))
     db.close()
 
+
 # Output the analysis
 print('************************************')
 print('**** Log Analyzer for news blog ****')
