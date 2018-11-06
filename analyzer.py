@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import datetime
 import psycopg2
 
 
@@ -60,7 +59,8 @@ def print_days_of_most_errors():
     db = psycopg2.connect(database='news')
     c = db.cursor()
     SQL = '''
-        SELECT e.day, (100*e.errors/r.requests) AS errors_percent
+        SELECT to_char(e.day, 'FMMonth FMDD, YYYY'),
+        round((100.0*e.errors/r.requests),2) AS errors_percent
         FROM (SELECT date(time) AS day, COUNT(*) AS errors
                 FROM log
                 WHERE status = '404 NOT FOUND'
@@ -76,31 +76,31 @@ def print_days_of_most_errors():
     c.execute(SQL)
     result = c.fetchall()
     for r in result:
-        d = datetime.date.strftime(r[0], '%b %d, %Y')
-        print('{} — {}% errors'.format(d, r[1]))
+        print('{} — {}% errors'.format(r[0], r[1]))
     db.close()
 
 
-# Output the analysis
-print('************************************')
-print('**** Log Analyzer for news blog ****')
-print('************************************\n')
+if __name__ == '__main__':
+    # Output the analysis
+    print('************************************')
+    print('**** Log Analyzer for news blog ****')
+    print('************************************\n')
 
-print('The most popular three articles of all time:')
-print('--------------------------------------------')
-print_most_popular_articles()
-print('\n')
+    print('The most popular three articles of all time:')
+    print('--------------------------------------------')
+    print_most_popular_articles()
+    print('\n')
 
-print('The most popular article authors of all time:')
-print('---------------------------------------------')
-print_most_popular_authors()
-print('\n')
+    print('The most popular article authors of all time:')
+    print('---------------------------------------------')
+    print_most_popular_authors()
+    print('\n')
 
-print('The days with more than 1% of requests lead to errors:')
-print('-------------------------------------------------------')
-print_days_of_most_errors()
-print('\n')
+    print('The days with more than 1% of requests lead to errors:')
+    print('-------------------------------------------------------')
+    print_days_of_most_errors()
+    print('\n')
 
-print('************************************')
-print('**** End of Log Analyzer output ****')
-print('************************************')
+    print('************************************')
+    print('**** End of Log Analyzer output ****')
+    print('************************************')
